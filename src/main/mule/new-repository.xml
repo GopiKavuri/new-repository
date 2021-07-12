@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="94f1b064-aa8a-4d14-b5f7-a3f13ed309f9" >
+		<http:listener-connection host="0.0.0.0" port="8085" />
+	</http:listener-config>
+	<flow name="new-repositoryFlow" doc:id="f9123799-b1d9-4de8-9b71-60e3371f0c66" >
+		<http:listener doc:name="Listener" doc:id="979cd59c-9801-44d9-a2bc-6548e830ea92" config-ref="HTTP_Listener_config" path="subpath"/>
+		<logger level="INFO" doc:name="Logger" doc:id="41097116-2791-456e-8782-cf13befceae1" message="started flow log"/>
+		<ee:transform doc:name="Transform Message" doc:id="db2a18b9-9d09-475c-9dd0-133f04a7c5a1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"name": "Gopi",
+	"id": 100,
+	"designation": "Application Developer EAI"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
